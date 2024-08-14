@@ -29,12 +29,22 @@ SECRET_KEY = 'django-insecure-wui-!%cfiu6s&fy2qkmk51p1_1&=)tt+(*e(o4xcy4c$oo-yyx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dfiyrqut1',
+    'API_KEY': '327587213475877',
+    'API_SECRET': '97VBYey4niCLGNgFucWURQlaxCo'
+}
+
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+
+'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,20 +149,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings.py
-
+#######################
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'msakthi150@outlook.com'
-EMAIL_HOST_PASSWORD = '$@k+Hisakth1'
-DEFAULT_FROM_EMAIL = 'msakthi150@outlook.com'
+EMAIL_HOST_USER = '***************'
+EMAIL_HOST_PASSWORD = '***************'
+DEFAULT_FROM_EMAIL = '***************'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dfiyrqut1',
-    'API_KEY': '327587213475877',
-    'API_SECRET': '97VBYey4niCLGNgFucWURQlaxCo'
+    'CLOUD_NAME': '***************'
+    'API_KEY': '***************',
+    'API_SECRET': '***************'
 }
 
-MEDIA_URL = '/media/'  # or any prefix you choose
+MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -10,7 +10,20 @@ class UserFilter(filters.FilterSet):
         model = Users
         fields = ['email', 'id']
 
+class AdminFilter(filters.FilterSet):
+    email = filters.CharFilter(field_name="email", lookup_expr='icontains')
+    id = filters.NumberFilter(field_name="id", lookup_expr='icontains')
 
+    class Meta:
+        model = Admins
+        fields = ['email', 'id']
+
+class ReviewFilter(filters.FilterSet):
+    eventId = filters.NumberFilter(field_name="eventId", lookup_expr='exact')
+
+    class Meta:
+        model = Review
+        fields = ['eventId']
 class ContactFilter(filters.FilterSet):
     email = filters.CharFilter(field_name="email", lookup_expr='icontains')
     id = filters.NumberFilter(field_name="id", lookup_expr='icontains')

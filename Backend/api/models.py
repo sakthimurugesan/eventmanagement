@@ -9,7 +9,7 @@ class Event(models.Model):
     organizer = models.CharField(max_length=255)
     organization = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to='eventmanagement/img')
+    image = models.CharField(max_length=255)
 
     capacity = models.IntegerField()
     small_description = models.TextField()
@@ -18,8 +18,10 @@ class Event(models.Model):
     guest = models.CharField(max_length=255)
     gmap = models.CharField(max_length=1000)
     organization_details = models.TextField()
-    inclusions = models.TextField(help_text='Use semi-colon to separate')  # Store inclusions as a semicolon-separated string
-    exclusions = models.TextField(help_text='Use semi-colon to separate')  # Store exclusions as a semicolon-separated string
+    inclusions = models.TextField(
+        help_text='Use semi-colon to separate')  # Store inclusions as a semicolon-separated string
+    exclusions = models.TextField(
+        help_text='Use semi-colon to separate')  # Store exclusions as a semicolon-separated string
 
     def inclusive_list(self):
         return self.inclusions.split('; ') if self.inclusions else []
@@ -39,6 +41,19 @@ class Users(models.Model):
 
     class Meta:
         verbose_name_plural = "Users"
+
+    def __str__(self):
+        return self.email
+
+
+class Admins(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=100)
+    termsAccepted = models.BooleanField()
+
+    class Meta:
+        verbose_name_plural = "Admins"
 
     def __str__(self):
         return self.email
@@ -69,3 +84,10 @@ class Contact(models.Model):
     sendCopy = models.BooleanField()
 
     def __str__(self): return self.email
+
+
+class Review(models.Model):
+    rating = models.PositiveIntegerField(default=0)
+    review = models.TextField()
+    userId=models.ForeignKey(Users,on_delete=models.CASCADE)
+    eventId=models.ForeignKey(Event,on_delete=models.CASCADE)
