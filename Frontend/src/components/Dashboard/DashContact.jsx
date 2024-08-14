@@ -1,3 +1,4 @@
+import AdminNav from './AdminNav';
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +30,10 @@ const DashContact = () => {
   };
 
   return (
+
+<>
+
+<AdminNav></AdminNav>
     <div className="container mt-4">
       <div className="table-responsive">
         <table className="table table-striped table-bordered">
@@ -66,6 +71,8 @@ const DashContact = () => {
       </div>
 
     </div>
+</>
+
   );
 };
 

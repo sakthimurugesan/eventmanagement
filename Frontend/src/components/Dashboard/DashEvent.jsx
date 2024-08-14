@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import AdminNav from './AdminNav';
 const DashEvent = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -29,6 +29,10 @@ const DashEvent = () => {
   };
 
   return (
+
+<>
+
+<AdminNav></AdminNav>
     <div className="container mt-4">
       <div className="table-responsive">
         <table className="table table-striped table-bordered">
@@ -68,7 +72,7 @@ const DashEvent = () => {
       </div>
       <a style={{
           position: 'fixed',
-          top: '20px',
+          top: '50px',
           right: '20px',
           zIndex: 1000
         }} href='/event-add'>
@@ -82,6 +86,8 @@ const DashEvent = () => {
       </Button>
         </a>
     </div>
+</>
+
   );
 };
 

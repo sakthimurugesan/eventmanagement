@@ -1,3 +1,4 @@
+import AdminNav from './AdminNav'
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -82,6 +83,8 @@ const DashUserAdd = () => {
     };
   
     return (
+  <>
+  <AdminNav></AdminNav>
       <div className="container mt-4">
         <h2>Add User</h2>
         <form>
@@ -122,6 +125,7 @@ const DashUserAdd = () => {
         
         </form>
       </div>
+  </>
     );
 };
 

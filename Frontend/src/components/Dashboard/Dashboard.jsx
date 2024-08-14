@@ -2,9 +2,11 @@
 
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-
+import AdminNav from './AdminNav';
 const Dashboard = () => {
   return (
+ <>
+ <AdminNav></AdminNav>
     <div>
       <h1>Admin Dashboard</h1>
       <p>Welcome, admin! This is the admin dashboard.</p>
@@ -17,6 +19,7 @@ const Dashboard = () => {
       </ul>
 
     </div>
+ </>
   );
 };
 

@@ -43,12 +43,10 @@ const Signup = () => {
     let errors = {};
 
     if (!name) {
-      alert("Name is required");
-      return;
+      errors.name = "Name is required";
     }
     if (!email) {
-      alert("Email is required");
-      return;
+      errors.email = "Email is required";
     } else if (!validateEmail(email)) {
       errors.email = "Invalid email address";
     }
@@ -64,35 +62,24 @@ const Signup = () => {
       errors.termsAccepted = "You must accept the terms of service";
     }
 
+    setErrors(errors);
+
     if (Object.keys(errors).length === 0) {
       try {
         setIsLoading(true); // Show loader
         const response = await axios.post('http://localhost:8000/users/', formData);
-        
-        setTimeout(() => {
-          toast.success('Registration successful!');
-          setIsLoading(false); // Hide loader
-          nav('/login');
-        }, 500);
-        
+
+        toast.success('Registration successful!');
+        nav('/login');
       } catch (error) {
-        setIsLoading(false); // Hide loader in case of error
-        if (error.response) {
-          console.log(error.response.data.email[0]);
-          if (error.response.data.email[0] === 'users with this email already exists.') {
-            toast.error('Email already exists');
-          } else {
-            toast.error('Registration failed. Please try again.');
-          }
-        } else if (error.request) {
-          console.log('Request data:', error.request);
+        if (error.response && error.response.data.email && error.response.data.email[0] === 'users with this email already exists.') {
+          toast.error('Email already exists');
         } else {
-          console.log('Error message:', error.message);
+          toast.error('Registration failed. Please try again.');
         }
-        console.log('Error config:', error.config);
+      } finally {
+        setIsLoading(false); // Hide loader in case of success or error
       }
-    } else {
-      setErrors(errors);
     }
   };
 
@@ -100,6 +87,7 @@ const Signup = () => {
     <>
       <title>Sign Up</title>
       <Navbar />
+      <ToastContainer />
       <section className="vh-100" style={{ backgroundColor: '#eee' }}>
         <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
@@ -187,7 +175,6 @@ const Signup = () => {
                           <input
                             className="form-check-input me-2"
                             type="checkbox"
-                            value=""
                             id="form2Example3c"
                             name="termsAccepted"
                             checked={formData.termsAccepted}
@@ -217,7 +204,6 @@ const Signup = () => {
         </div>
       </section>
       <Footer />
-      
     </>
   );
 };

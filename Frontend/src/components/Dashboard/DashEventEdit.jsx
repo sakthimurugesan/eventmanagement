@@ -1,3 +1,4 @@
+import AdminNav from './AdminNav';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -6,7 +7,7 @@ const EventEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState({
-    trend: false,
+    trend: 0,
     name: '',
     place: '',
     date: '',
@@ -148,7 +149,9 @@ const EventEdit = () => {
   };
 
   return (
-    <div className="container mt-4">
+ <>
+ <AdminNav></AdminNav>
+ <div className="container mt-4">
       <h2>Edit Event</h2>
       <form>
         <div className="mb-3">
@@ -172,16 +175,15 @@ const EventEdit = () => {
           />
         </div>
         <div className="mb-3">
-          <input
-            className="form-check-input me-2"
-            type="checkbox"
-            id="form4Example4"
-            name="trend" // Updated name to match the state property
-            checked={event.trend}
+        <input
+            type="number"
+            className="form-control"
+            name="trend"
+            value={event.trend}
             onChange={handleChange}
           />
           <label className="form-check-label" htmlFor="form4Example4">
-            Add event to home page
+            Type 1 Add event to home page
           </label>
         </div>
         <div className="mb-3">
@@ -366,6 +368,7 @@ const EventEdit = () => {
         )}
       </form>
     </div>
+ </>
   );
 };
 

@@ -23,11 +23,16 @@ import DashContact from './components/Dashboard/DashContact';
 import DashContactEditEdit from './components/Dashboard/DashContactEdit';
 import EventRegisterDash   from './components/Dashboard/EventRegister';
 import EventRegisterEdit from './components/Dashboard/EventRegisterEdit';
+import ForgetPassword from './components/ForgetPassword/ForgetPassword';
+import ResetPassword from './components/ForgetPassword/ResetPassword';
+import AdminLogin from './components/Dashboard/AdminLogin';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/signup" element={<Signup />} />
@@ -48,7 +53,7 @@ function App() {
         <Route path="/contact-edit/:id" element={ <PrivateRoute> <DashContactEditEdit /> </PrivateRoute>}/>
         <Route path="/dashboard/event-register" element={ <PrivateRoute> <EventRegisterDash /> </PrivateRoute>}/>
         <Route path="/event-register-edit/:id" element={ <PrivateRoute> <EventRegisterEdit /> </PrivateRoute>}/>
-
+        <Route path='/admin-login' element={<AdminLogin></AdminLogin>}></Route>
       
       </Routes>
 

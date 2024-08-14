@@ -1,3 +1,4 @@
+import AdminNav from './AdminNav';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -162,6 +163,8 @@ const DashEventAdd = () => {
   };
 
   return (
+    <>
+<AdminNav></AdminNav>    
     <div className="container mt-4">
       <h2>{id ? 'Edit Event' : 'Add Event'}</h2>
       <form>
@@ -389,6 +392,7 @@ const DashEventAdd = () => {
         )}
       </form>
     </div>
+    </>
   );
 };
 

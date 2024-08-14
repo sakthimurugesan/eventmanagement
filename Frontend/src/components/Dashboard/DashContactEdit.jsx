@@ -1,3 +1,4 @@
+import AdminNav from './AdminNav';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -51,7 +52,7 @@ const DashContactEdit = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/contactus/${id}`);
+      await axios.delete(`http://localhost:8000/contactus/${id}/`);
       setTimeout(() => {
         toast.error('Message Deleted successful!');
         
@@ -63,6 +64,10 @@ const DashContactEdit = () => {
   };
 
   return (
+
+
+    <>
+    <AdminNav></AdminNav>
     <div className="container mt-4">
       <h2>Edit Message</h2>
       <form>
@@ -118,6 +123,7 @@ const DashContactEdit = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 

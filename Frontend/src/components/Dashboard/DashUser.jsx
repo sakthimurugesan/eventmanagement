@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
+import AdminNav from './AdminNav';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -29,6 +30,8 @@ const DashUser = () => {
   };
 
   return (
+    <>
+    <AdminNav></AdminNav>
     <div className="container mt-4">
       <div className="table-responsive">
         <table className="table table-striped table-bordered">
@@ -65,7 +68,7 @@ const DashUser = () => {
       </div>
       <a style={{
           position: 'fixed',
-          top: '20px',
+          top: '50px',
           right: '20px',
           zIndex: 1000
         }} href='/users-add'>
@@ -79,6 +82,7 @@ const DashUser = () => {
       </Button>
         </a>
     </div>
+    </>
   );
 };
 

@@ -1,3 +1,4 @@
+import AdminNav from './AdminNav'
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -58,7 +59,7 @@ const DashUserEdit = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/users/${id}`);
+      await axios.delete(`http://localhost:8000/users/${id}/`);
       setTimeout(() => {
         toast.error('User Deleted successful!');
         
@@ -84,6 +85,8 @@ const DashUserEdit = () => {
   };
 
   return (
+<>
+<AdminNav></AdminNav>
     <div className="container mt-4">
       <h2>Edit User</h2>
       <form>
@@ -126,6 +129,8 @@ const DashUserEdit = () => {
         </button>
       </form>
     </div>
+</>
+
   );
 };
 

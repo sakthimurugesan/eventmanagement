@@ -6,10 +6,9 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../navbar/Navbar';
 import Footer from '../footer/Footer';
-import { sd } from '@cloudinary/url-gen/qualifiers/streamingProfile';
 
 const EventRegister = () => {
-  let { eventId } = useParams(); // Extract eventId from the URL parameters
+  const { eventId } = useParams(); // Extract eventId from the URL parameters
   const { name } = useSelector((state) => state.user); // Access user data from Redux
   const navigate = useNavigate();
 
@@ -26,77 +25,95 @@ const EventRegister = () => {
     zipcode: '',
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to handle submission
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!name) {
+      toast.error('Please log in to register.', { autoClose: 3000 });
       navigate('/login');
       return;
     }
-
-    const userIdString = localStorage.getItem('userId'); // Get userId from localStorage
-    const userId = parseInt(userIdString, 10); // Convert userId to an integer
-    eventId= parseInt(eventId, 10);
+  
+    const userIdString = localStorage.getItem('userId');
+    const userId = parseInt(userIdString, 10);
+    const parsedEventId = parseInt(eventId, 10);
+  
     if (!userId) {
-      setTimeout(() => {
-        toast.error('User not logged in. Please log in.');
-
-      }, 500);
+      toast.error('User not logged in. Please log in.', { autoClose: 3000 });
       navigate('/login');
       return;
     }
-
-
-    const data = { ...formData, userId, eventId }; // Include userId and eventId in the data sent to the server
-
-    console.log('Data sent to server:', data); // Log data to verify eventId inclusion
-    const serverData = await axios.get(`http://localhost:8000/event_register?eventId=${eventId}&userId=${userId}`);
-    console.log(serverData)
-    console.log(`http://localhost:8000/event_register?eventId=${eventId}&userId=${userId}`)
-        if(serverData.data.length>=1){
-      setTimeout(() => {
-        toast.error('You have already registered');
-        
-      }, 500);
-      navigate('/events');
+  
+    setIsSubmitting(true);
+  
+    const age = parseInt(formData.age, 10);
+    if (isNaN(age)) {
+      toast.error('Please enter a valid age.', { autoClose: 3000 });
+      setIsSubmitting(false);
       return;
     }
+  
+    const data = { 
+      ...formData, 
+      userId, 
+      eventId: parsedEventId, 
+      age: age 
+    };
+  
+    console.log('Submitting data:', data);
+  
     try {
       const response = await axios.post('http://localhost:8000/event_register/', data);
-      console.log(response)
-      if (response.status >= 200 && response.status <= 210) {
+      console.log('Response status:', response.status);
+  
+      if (response.status === 201) {
+        toast.success('Registration successful!', { autoClose: 3000 });
         setTimeout(() => {
-          toast.success('Registration successful!');
-          
-        }, 500);
-        navigate('/events');
+          navigate('/events');
+        }, 1000); // Delay navigation to ensure toast is visible
+      } else if (response.status === 409) {
+        toast.error('You have already registered.', { autoClose: 3000 });
+        setTimeout(() => {
+          navigate('/events');
+        }, 1000); // Delay navigation to ensure toast is visible
       } else {
-
-        setTimeout(() => {
-          toast.error('Registration failed. Please try again.');
-
-        }, 500);
+        toast.error('Registration failed. Please try again.', { autoClose: 3000 });
       }
     } catch (error) {
-      console.log( error);
-      setTimeout(() => {
-        // toast.error('An error occurred. Please try again later.');
-        
-      }, 500);
+      console.error('Request failed with error:', error);
+      if (error.response && error.response.status === 409) {
+        toast.error('You have already registered.', { autoClose: 3000 });
+        setTimeout(() => {
+          navigate('/events');
+        }, 1000); // Delay navigation to ensure toast is visible
+      } else if (error.response && error.response.data.detail) {
+        toast.error(error.response.data.detail, { autoClose: 3000 });
+      } else {
+        toast.error('An error occurred. Please try again later.', { autoClose: 3000 });
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
+  
+  
+  
+  
+  
 
   return (
     <>
-    <title>Register for Event</title>
+      <title>Register for Event</title>
       <Navbar />
       <div className="container mt-5 form-div">
         <form style={{ width: '30rem' }} onSubmit={handleSubmit}>
@@ -245,11 +262,13 @@ const EventRegister = () => {
               </div>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary btn-block mb-4">Register</button>
+          <button type="submit" className="btn btn-primary btn-block mb-4" disabled={isSubmitting}>
+            {isSubmitting ? 'Registering...' : 'Register'}
+          </button>
         </form>
-
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

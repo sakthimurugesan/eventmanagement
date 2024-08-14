@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AdminNav from './AdminNav'
 
 const EventRegisterDash = () => {
   const [data, setData] = useState([]);
@@ -29,6 +30,8 @@ const EventRegisterDash = () => {
   };
 
   return (
+    <>
+    <AdminNav></AdminNav>
     <div className="container mt-4">
       <div className="table-responsive">
         <table className="table table-striped table-bordered">
@@ -69,6 +72,7 @@ const EventRegisterDash = () => {
       </div>
   
     </div>
+    </>
   );
 };
 

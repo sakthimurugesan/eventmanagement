@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AdminNav from './AdminNav'
 import { toast } from 'react-toastify';
 const EventRegisterEdit = () => {
   const { id } = useParams();
@@ -94,6 +95,8 @@ const EventRegisterEdit = () => {
   };
 
   return (
+    <>
+    <AdminNav></AdminNav>
     <div className="container mt-4">
       <h2>Edit Registered Data</h2>
       <form>
@@ -187,6 +190,7 @@ const EventRegisterEdit = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 
